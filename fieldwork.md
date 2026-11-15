@@ -1,115 +1,70 @@
 # Fieldwork record
 
-This file is a structured record for the actual observation and owner discussion. Complete blank fields only with information that was genuinely collected. Do not invent statements, dates, photographs, or methods.
-
-## Visit details
+## Visit overview
 
 - **Location:** NIT Silchar tapri
-- **Person:** Rupam Daa, owner
-- **Dataset represented in repository:** 20 entries dated 14 November 2026
-- **Source attribution in CSV:** NIT Silchar Tapri — Rupam Das
-- **Observer name:** ______________________________________
-- **Visit date:** _________________________________________
-- **Start time:** _________________________________________
-- **End time:** ___________________________________________
-- **Weather or unusual conditions, if relevant:** ___________
+- **Person spoken to:** Rupam Daa, the tapri owner
+- **Purpose:** Understand the owner's day-to-day difficulties and get a practical view of how the tapri operates.
+- **Nature of visit:** Informal, in-person interaction. This was not a formal questionnaire-based survey.
+- **Additional participation:** I volunteered to spend the day helping him with the tapri's work so I could understand the workflow directly.
+- **Dataset in the repository:** 20 timestamped entries dated 14 November 2026, attributed in the CSV to NIT Silchar Tapri — Rupam Das.
 
-## Observation method
+## What I actually did
 
-Describe the exact position from which the observation was made, the duration, and what could or could not be seen.
+I visited the tapri and spoke directly with Rupam Daa about the main issues he faces while running it. Rather than conducting a formal interview with a prepared questionnaire, I asked him about the difficulties he encounters in his everyday work.
 
-- Where did you stand or sit?
-- Could you see the handover and payment counter at the same time?
-- How were timestamps recorded?
-- How were item names and prices checked?
-- How were quantities counted?
-- How was payment confirmed (cash, UPI screen/notification, owner confirmation, or another method)?
-- How were low, medium, and high crowd levels defined?
-- What events could have caused an observation to be missed?
+I also volunteered to join him and help out for the day. The intention was to understand the work from the owner's perspective instead of relying only on assumptions made from outside. Being present in the working environment provided practical context for thinking about the problem and designing a tool that should fit into the tapri's routine.
 
-**Method notes:**
+The visit should therefore be described as an informal discussion combined with a day of practical involvement, not as a controlled experiment or a structured survey.
 
-________________________________________________________________
+## What was recorded
 
-________________________________________________________________
+The recovered data.csv contains 20 entries dated 14 November 2026. Each row contains:
 
-________________________________________________________________
+- A timestamp.
+- The item and its unit price.
+- Quantity handed over and quantity paid for.
+- A crowd-level label.
+- An observation note.
+- A payment-verification category.
+- A source attribution.
 
-## Verification definitions used in the log
+The CSV is the record available for analysis. I cannot now reliably reconstruct every detail of how each entry was noted, the exact position from which I observed, or the precise rule I used at the time to assign crowd levels. Those methodological details are therefore not claimed here.
 
-- **paid:** Payment was observed or otherwise verified for all units recorded as handed over.
-- **observed_unpaid:** The observer directly recorded a quantity mismatch and had a basis to classify the units as unpaid at the time of observation.
-- **needs_follow_up:** Payment status could not be established confidently, including possible delayed or group payment.
+The dataset distinguishes three statuses:
 
-If the actual collection method differed from these definitions, document the difference here rather than silently changing the meaning.
+- **paid:** The entry records all handed-over units as paid.
+- **observed_unpaid:** The entry records a quantity discrepancy as observed unpaid.
+- **needs_follow_up:** The entry records a discrepancy whose payment status still requires checking.
 
-**Any deviations or uncertainties:**
+These are the labels present in the recovered data. They should not be treated as independent proof of a customer's intent. Delayed payments, group payments, missed observations, and recording mistakes can affect whether a discrepancy is correctly classified.
 
-________________________________________________________________
+## Discussion with Rupam Daa
 
-## Conversation with the owner
+The conversation was informal and focused on the main problems he faces while operating the tapri. I did not use a formal questionnaire, and I do not have a verbatim transcript of the conversation.
 
-- **Owner's name and role confirmed:** ______________________
-- **Conversation date/time:** ______________________________
-- **Permission to take notes:** Yes / No
-- **Was the owner shown the prototype?** Yes / No
+I have therefore not invented quotations or attributed specific statements to him. The project uses the problem context explored during this interaction as motivation for examining how handovers and payments can be reconciled during busy periods.
 
-Record actual statements. Mark direct quotations with quotation marks only when the wording is exact; otherwise label them as summaries.
+- **Formal questionnaire used:** No.
+- **Verbatim interview transcript available:** No.
+- **Owner feedback on the completed web application documented:** Not currently recorded.
+- **Exact owner quotations:** None recorded in this file.
 
-1. ________________________________________________________
-2. ________________________________________________________
-3. ________________________________________________________
+## Evidence and record limitations
 
-**How the owner currently tracks orders and payments:**
+The recovered CSV is available in the repository, but a detailed contemporaneous fieldwork diary describing the observation procedure is not available. The following details cannot be reliably reconstructed from memory and are intentionally not asserted:
 
-________________________________________________________________
+- Exact start and end times of the visit.
+- Exact position or viewpoint during the day.
+- A formal definition for low, medium, and high crowd levels.
+- The precise method used to verify each cash or UPI payment.
+- A verbatim account of the owner's statements.
+- Whether the owner tested or approved the finished application.
 
-**What the owner says is difficult during busy periods:**
+The dataset is a small set of observations from one date. It does not establish a representative daily loss rate, prove theft, or establish intent. The project should present the figures as a summary of the recovered records only.
 
-________________________________________________________________
+## Fieldwork summary
 
-**What information would be useful to the owner:**
+The fieldwork was primarily about understanding the real operating environment: I spoke with Rupam Daa about the difficulties he faces and volunteered to help him for the day. This practical involvement informed the decision to build a simple tool focused on recording handovers, checking payment mismatches, and keeping track of payments received later.
 
-________________________________________________________________
-
-**Feedback after seeing or trying the app:**
-
-________________________________________________________________
-
-**Changes requested by the owner:**
-
-________________________________________________________________
-
-## Field evidence
-
-Only list photographs or documents that actually exist and that you have permission to retain.
-
-| Evidence file | Actual capture date/time | What it shows | Permission confirmed? |
-|---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
-
-Do not photograph identifiable customers, payment screens containing account information, phone numbers, or other sensitive details. Ask permission before photographing the stall or owner. Keep original evidence files in a private location unless the assignment explicitly requires submission.
-
-## Limitations and possible observation bias
-
-Describe blocked sightlines, simultaneous orders, group payments, delayed payments, missed timestamps, uncertain prices, or any other factor that could affect the records.
-
-________________________________________________________________
-
-________________________________________________________________
-
-________________________________________________________________
-
-## Fieldwork completion checklist
-
-- [ ] Observer, date, and time details completed.
-- [ ] Observation position and method described.
-- [ ] Crowd-level definitions documented.
-- [ ] Payment-verification method explained.
-- [ ] Uncertainties and limitations recorded.
-- [ ] Owner conversation recorded accurately.
-- [ ] Permission for any retained photographs confirmed.
-- [ ] No customer identities or sensitive payment details collected.
-- [ ] Every claim in the report can be traced to actual evidence.
+The approach was informal and practical rather than a formal survey. This record intentionally distinguishes what I remember doing and what the CSV contains from methodological details that I cannot now verify.
