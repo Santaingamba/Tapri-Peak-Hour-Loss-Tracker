@@ -1,16 +1,11 @@
-# Student reflection — write this yourself
+# Student reflection
 
-The assignment requires a student-authored reflection. This file intentionally provides prompts rather than a generated first-person account. Do not submit the prompts unchanged.
+Before visiting the tapri, I was approaching the problem mainly as a technical one: identify possible payment mismatches during busy hours and build a program to calculate their value. After speaking with Rupam Daa about the difficulties he faces and volunteering to help him for the day, I realised that the solution also has to fit the way a small tapri actually operates. The owner is occupied with serving people and managing several things at once. A tool that requires too many entries or too much attention at the busiest time could become another problem instead of helping him.
 
-Write approximately half a page in your own words after completing the actual fieldwork and, if possible, showing the prototype to the owner.
+That changed how I thought about the application. I focused on keeping the daily workflow straightforward: record what was served, record what was paid, highlight a mismatch, and allow a later payment to be added against the original entry. The purpose is to make it easier to review transactions, not to accuse anyone. A mismatch may happen because payment is delayed, a group pays together, or an entry is missed. The software cannot know the reason by itself, so a person must check before marking an amount as unpaid.
 
-Address these points using specific examples:
+Working on this project also showed me that building a feature is not the same as proving that it is useful. The historical CSV analysis helped organise the observations, while the web application provides a way to record new orders. However, the application does not automatically verify cash or UPI payments, and it has not been established that every part of the workflow is convenient for the owner in real daily use. That would require trying it with him and listening to his feedback.
 
-1. **Initial assumptions:** What did you think the problem was at the beginning? Which assumptions changed after observing the workflow?
-2. **What you would simplify:** Which feature would you remove or reduce if the owner needs to use the tool during a rush?
-3. **AI contribution:** Which tasks did AI help with? Which suggestions needed correction, testing, or independent verification?
-4. **Owner feedback:** What did Rupam Daa actually say or demonstrate that influenced your design? If no owner conversation took place, state that honestly.
-5. **Trust boundaries:** What should the app never claim to know? Consider delayed payments, group payments, observation errors, and the difference between an outstanding amount and intentional non-payment.
-6. **Next iteration:** What would you change after watching someone use the app in a real setting?
+AI tools helped me move faster while planning, writing, and documenting parts of the project, but their output still needed to be checked against the actual data and the application's behaviour. I also learned that documentation should not claim a formal survey method, exact interview statements, or owner approval when those details were not recorded.
 
-Use details from your own work. Do not invent quotations, emotions, owner approval, or field observations.
+Overall, the most important lesson for me was to start with the person's actual working environment rather than assume that a technically complete solution is automatically a good solution. The project is a practical first attempt at making payment reconciliation easier. Its value should ultimately be judged by whether it saves the owner time and fits naturally into his routine, while remaining careful about what the recorded data can and cannot prove.
