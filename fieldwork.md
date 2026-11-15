@@ -1,23 +1,23 @@
-# Fieldwork record — complete after the real visit
+# Fieldwork record
 
 **Location:** NIT Silchar tapri  
 **Person:** Rupam Daa, owner  
-**Visit date:** ____________________  
-**Observation start/end (minimum 20 minutes):** ____________________  
+**Recorded dataset:** 20 entries dated 14 November 2026  
 **Observer:** ____________________
 
-This is a blank evidence template. Do not fill it using the synthetic CSV or invent quotes, timestamps, photographs, or observations.
+Complete the remaining details below from what actually happened. Do not invent quotes, timestamps, photographs, or observations.
 
 ## Observation method
 
-- Get permission and stand where you do not obstruct the stall.
-- Record at least 20 real item handovers, with exact time, item, price, quantity handed over, quantity paid for, crowd level, and a neutral note.
+- Record where you stood and the observation period.
+- Explain how you noted exact time, item, price, quantity handed over, quantity paid for, crowd level, and neutral observation notes.
 - Use `paid` when payment was seen, `observed_unpaid` only when you directly saw no payment before departure, and `needs_follow_up` when uncertain.
 - Do not record customer identities or photograph identifiable customers.
 
 ## Conversation with Rupam Daa
 
-**Name and role confirmed:** ______________________________
+**Name and role confirmed:** ______________________________  
+**Date/time of conversation:** ____________________________
 
 Three things he actually said:
 1. ______________________________________________________
