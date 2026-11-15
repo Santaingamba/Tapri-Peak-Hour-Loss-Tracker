@@ -3,6 +3,7 @@
 from __future__ import annotations
 import argparse
 import csv
+import math
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
@@ -29,18 +30,22 @@ def load_rows(path: Path) -> list[dict]:
         if missing: raise ValueError("Missing CSV columns: " + ", ".join(sorted(missing)))
         rows = []
         for line_no, raw in enumerate(reader, start=2):
+            if None in raw:
+                raise ValueError(f"Row {line_no}: unexpected extra CSV fields")
             if not any((value or "").strip() for value in raw.values()): continue
             try:
-                stamp = datetime.strptime(raw["timestamp"].strip(), "%Y-%m-%d %H:%M")
-                price = float(raw["unit_price"])
-                handed = int(raw["qty_handed_over"])
-                paid = int(raw["qty_paid_for"])
+                stamp = datetime.strptime((raw.get("timestamp") or "").strip(), "%Y-%m-%d %H:%M")
+                price = float(raw.get("unit_price", ""))
+                handed = int(raw.get("qty_handed_over", ""))
+                paid = int(raw.get("qty_paid_for", ""))
             except (ValueError, TypeError) as exc:
                 raise ValueError(f"Row {line_no}: invalid timestamp, price, or quantity: {exc}") from exc
-            item, crowd = raw["item"].strip(), raw["crowd_level"].strip().lower()
-            status, origin = raw["verification_status"].strip().lower(), raw["data_origin"].strip()
+            item = (raw.get("item") or "").strip()
+            crowd = (raw.get("crowd_level") or "").strip().lower()
+            status = (raw.get("verification_status") or "").strip().lower()
+            origin = (raw.get("data_origin") or "").strip()
             if not item or not origin: raise ValueError(f"Row {line_no}: item and data_origin are required")
-            if price <= 0 or handed < 1 or paid < 0 or paid > handed:
+            if not math.isfinite(price) or price <= 0 or handed < 1 or paid < 0 or paid > handed:
                 raise ValueError(f"Row {line_no}: invalid price or quantity bounds")
             if crowd not in VALID_CROWD: raise ValueError(f"Row {line_no}: crowd_level must be low, medium, or high")
             if status not in VALID_STATUS: raise ValueError(f"Row {line_no}: invalid verification_status")
@@ -48,7 +53,7 @@ def load_rows(path: Path) -> list[dict]:
             if status == "observed_unpaid" and paid == handed: raise ValueError(f"Row {line_no}: observed_unpaid needs at least one unpaid unit")
             if status == "needs_follow_up" and paid == handed: raise ValueError(f"Row {line_no}: use paid when all handed-over units were paid")
             rows.append({"timestamp": stamp, "item": item, "price": price, "handed": handed, "paid": paid,
-                         "crowd": crowd, "note": raw["observation_note"].strip(), "status": status,
+                         "crowd": crowd, "note": (raw.get("observation_note") or "").strip(), "status": status,
                          "window": time_window(stamp), "origin": origin})
     return rows
 
