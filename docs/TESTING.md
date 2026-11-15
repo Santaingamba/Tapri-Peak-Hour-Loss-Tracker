@@ -6,7 +6,14 @@ From the repository root, with the project's Python environment active:
 
     python -m unittest discover -s tests -v
 
-The test suite includes tests for the historical CSV analysis and the Flask web app.
+The test suite includes separate analysis, command-line integration, HTTP workflow/security, and direct database constraint tests:
+
+- `tests/test_app.py` — CSV validation, time-window boundaries, generated analysis invariants, aggregation conservation, and recovered-data regression checks.
+- `tests/test_cli.py` — real subprocess execution of the CLI, custom input paths, invalid input exit codes, and report output.
+- `tests/test_web_app.py` — authenticated route workflows, order entry, partial/full recovery, validation, CSRF, login throttling, session rotation, XSS escaping, history, and response headers.
+- `tests/test_web_database.py` — database CHECK constraints, foreign keys, and valid persistence operations.
+
+The generated analysis tests use a fixed random seed so failures are reproducible while still exercising many independently generated datasets.
 
 ## Historical analysis tests
 
@@ -37,7 +44,7 @@ These tests are focused regression checks, not exhaustive browser, load, penetra
 
 ## Continuous integration
 
-The GitHub Actions workflow in .github/workflows/tests.yml runs on pushes to main and pull requests targeting main. It checks out the repository, configures Python 3.12, installs requirements, compiles Python files, and runs unittest discovery.
+The GitHub Actions workflow in .github/workflows/tests.yml runs on pushes to main and pull requests targeting main. It runs the suite on Python 3.10, 3.11, and 3.12, installs requirements, compiles Python files, and runs unittest discovery.
 
 A green workflow means those automated steps passed for that commit. It does not prove that every runtime environment, browser, network, or deployment configuration will work.
 
