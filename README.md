@@ -1,127 +1,76 @@
 # Tapri Peak-Hour Loss Tracker
 
-A small, dependency-free Python command-line tool for summarising item handovers and payment discrepancies at the NIT Silchar tapri. The recovered dataset identifies its source as **NIT Silchar Tapri — Rupam Das**.
+A phone-friendly daily order and payment-reconciliation app for the NIT Silchar tapri. The existing observation-analysis CLI (app.py) remains available; web_app.py adds the operational tracker.
 
-## Recorded dataset summary
+## Daily workflow
 
-The repository contains **20 entries dated 14 November 2026** from the recovered CSV supplied for this project.
+1. Open the app on a phone or laptop.
+2. Record item, price, quantity served, quantity paid for, payment method, and an optional note.
+3. The app flags a quantity mismatch immediately.
+4. Check cash/UPI records and confirm whether the amount is genuinely still unpaid.
+5. If payment arrives later, record it against the original order. The outstanding balance decreases.
+6. Review today's orders or filter history by date.
 
-| Measure | Result |
-|---|---:|
-| Entries | 20 |
-| Units handed over | 42 |
-| Units paid for | 35 |
-| Paid entries | 13 |
-| Entries marked observed unpaid | 5 |
-| Units in observed unpaid entries | 5 |
-| Potential uncollected value | **₹95** |
-| Entries requiring follow-up | 2 |
-| Value pending follow-up (excluded) | **₹10** |
-
-The ₹95 total includes only entries marked \`observed_unpaid\`. The ₹10 pending amount is shown separately and is not included in the potential uncollected value. These totals describe this recorded sample only; they are not a daily or monthly estimate.
-
-## What it does
-
-- Reads a CSV of item handovers.
-- Calculates the listed-price value of quantities marked \`observed_unpaid\`.
-- Groups potential value by time window and item.
-- Separately totals \`needs_follow_up\` entries without counting them as observed unpaid value.
-- Validates timestamps, prices, quantities, crowd levels, status values, and source fields.
-- Prints a concise report for reviewing the recorded observation period.
-
-The tool does not identify customers, establish intent, prove theft, or estimate a weekly/monthly loss.
-
-## Menu and prices
-
-| Item | Price |
-|---|---:|
-| Marlboro Advance | ₹15 |
-| Gold Flake | ₹15 |
-| Flake | ₹10 |
-| Tropical | ₹10 |
-| Tea | ₹10 |
-| Boiled Maggi | ₹20 |
-| Fried Maggi | ₹30 |
-| Poach | ₹20 |
-| Omelette | ₹20 |
-| Bread Omelette | ₹30 |
-| Cake | ₹10 |
-| Biscuits | ₹5 |
+The dashboard shows order count, units served, payments recorded (including later recoveries), and the amount still needing reconciliation. A mismatch is a prompt to check, not proof of deliberate non-payment.
 
 ## Run locally
 
-Requires Python 3.10+; no third-party packages are required.
+Requires Python 3.10+.
 
-\`\`\`bash
-python app.py
-\`\`\`
+    python -m venv .venv
+    # Windows PowerShell
+    .\.venv\Scripts\Activate.ps1
+    # macOS / Linux
+    source .venv/bin/activate
+    pip install -r requirements.txt
 
-To analyse another CSV with the same columns:
+Generate a random session secret:
 
-\`\`\`bash
-python app.py --data path/to/observations.csv
-\`\`\`
+    python -c "import secrets; print(secrets.token_urlsafe(48))"
 
-Run tests:
+Set both values in the same terminal before starting. Use a private password/passphrase of at least 8 characters; never use example credentials.
 
-\`\`\`bash
-python -m unittest discover -s tests -v
-\`\`\`
+Windows PowerShell:
+
+    $env:TAPRI_SECRET_KEY = "paste-generated-random-secret"
+    $env:TAPRI_ADMIN_PIN = "choose-a-private-password"
+
+macOS / Linux:
+
+    export TAPRI_SECRET_KEY='paste-generated-random-secret'
+    export TAPRI_ADMIN_PIN='choose-a-private-password'
+
+Start with:
+
+    python web_app.py
+
+Open http://127.0.0.1:5000. The first run creates tapri.sqlite3 beside web_app.py. For a phone on the same trusted private Wi-Fi, set TAPRI_HOST=0.0.0.0 and open http://computer-lan-ip:5000 on the phone. Do not expose Flask's development server directly to the public internet. Remote use requires a production WSGI server, HTTPS reverse proxy, TAPRI_HTTPS=1, and persistent protected storage.
+
+Optional variables: TAPRI_DB_PATH (database path), TAPRI_TIMEZONE (defaults to Asia/Kolkata), TAPRI_HOST (defaults to 127.0.0.1), PORT (defaults to 5000), and TAPRI_HTTPS (defaults to 0).
+
+## Data and privacy
+
+- The live app starts with an empty operational database. It does not automatically import the historical observation CSV; those records belong to the separate observation exercise.
+- products.csv supplies item suggestions and reference prices. Verify prices at the counter; each saved order retains its own price.
+- Do not enter customer names, phone numbers, account details, faces, or other identifying information.
+- The app does not connect to banks, UPI notifications, QR payments, CCTV, or a POS terminal. Payment records must be verified by the operator.
+- Back up tapri.sqlite3 securely. The password is hashed, but the database itself is not encrypted.
+- Never commit .env, credentials, or the SQLite database.
+
+## Security controls
+
+Owner password hash (scrypt), required random session secret, HTTP-only and SameSite session cookies, optional Secure cookie for HTTPS, session rotation on login, CSRF checks on POST forms, login throttling (8 failed attempts per IP per 15 minutes), parameterized SQL, SQLite foreign keys, bounded input validation, integer-paise money storage, serialized recovery balance checks, Jinja auto-escaping, request-size limit, security headers, and debug mode disabled.
+
+This is a small single-owner operational tool, not a payment processor or audited accounting system. Public deployment still requires a production WSGI server, HTTPS, persistent protected storage, backups, and an independent security review.
+
+## Existing analysis tool
+
+    python app.py
+    python app.py --data path/to/observations.csv
+    python -m unittest discover -s tests -v
+
+The recovered historical dataset in data.csv is retained for analysis and is not inserted into the live transaction ledger.
 
 ## Calculation
 
-For each entry marked \`observed_unpaid\`:
-
-\`\`\`
-(qty_handed_over - qty_paid_for) × unit_price
-\`\`\`
-
-Only this status contributes to the potential uncollected value. Entries marked \`needs_follow_up\` are shown separately until payment status is clarified.
-
-## CSV format
-
-| Column | Meaning |
-|---|---|
-| \`timestamp\` | Local timestamp in \`YYYY-MM-DD HH:MM\` |
-| \`item\` | Product name |
-| \`unit_price\` | Price per unit in INR |
-| \`qty_handed_over\` | Units handed over |
-| \`qty_paid_for\` | Units for which payment was seen |
-| \`crowd_level\` | \`low\`, \`medium\`, or \`high\` |
-| \`observation_note\` | Neutral note describing what was recorded |
-| \`verification_status\` | \`paid\`, \`observed_unpaid\`, or \`needs_follow_up\` |
-| \`data_origin\` | Source/location attribution for the record |
-
-If payment is uncertain, record \`needs_follow_up\`; do not infer intent. Do not collect customer names, faces, phone numbers, or other identifying details.
-
-## Fieldwork documentation
-
-See \`fieldwork.md\` for the owner-conversation and observation documentation template. Complete any outstanding interview notes and photo evidence from the actual visit, with permission and without capturing identifiable customers. The reflection in \`reflection.md\` is a prompt for the student to complete in their own words. Add the actual AI conversation exports to \`ai-chats/\`.
-
-## Limitations
-
-- A payment may be made later, by another person, or through UPI outside the observer's view.
-- An apparent discrepancy does not prove deliberate non-payment or theft.
-- Incorrect prices or quantities produce incorrect estimates.
-- Crowd level is subjective unless a consistent rule is defined and used.
-- A short observation window is not representative of a whole day or month.
-- A discrepancy may come from shared orders, delayed payment, a discount, or an observation/recording mistake.
-- The tool does not integrate with a POS, inventory system, CCTV, or payment provider.
-
-## Research sources
-
-1. Clarke, R. V. & Petrossian, G. (2012), [Shoplifting, 2nd Edition](https://www.popcenter.org/content/shoplifting-2nd-ed), Center for Problem-Oriented Policing. Used as background for framing questions about small goods and prevention; it is not evidence about this tapri.
-2. UK Home Office (2014), [Crime against businesses: Detailed findings from the 2013 Commercial Victimisation Survey](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/342577/crime-against-businesses-detailed-13.pdf). Used for terminology and background; UK results are not transferable estimates for NIT Silchar.
-
-## AI usage
-
-AI assisted with research framing, implementation, validation logic, tests, and documentation. It did not conduct the recorded observation or take field photographs. Export the actual AI conversations used during development into \`ai-chats/\` before submission.
-
-## Remaining submission checklist
-
-- [ ] Complete any outstanding owner-interview notes.
-- [ ] Add two original timestamped photos with permission.
-- [ ] Complete \`fieldwork.md\` with details from the actual visit.
-- [ ] Write \`reflection.md\` yourself, without AI.
-- [ ] Add actual AI chat exports to \`ai-chats/\`.
-- [ ] Record and link the requested 3-minute demo using this dataset.
+Initial mismatch = (quantity served - quantity paid) × unit price. Later payments reduce the outstanding balance. Uncertain mismatches are never silently treated as confirmed loss.
