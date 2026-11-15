@@ -15,7 +15,7 @@ FIELDS = ["timestamp", "item", "unit_price", "qty_handed_over", "qty_paid_for",
 
 def write_csv(rows, header=FIELDS):
     handle = tempfile.NamedTemporaryFile("w", encoding="utf-8", newline="", delete=False)
-    writer = csv.DictWriter(handle, fieldnames=header)
+    writer = csv.DictWriter(handle, fieldnames=header, extrasaction='ignore')
     writer.writeheader()
     writer.writerows(rows)
     handle.close()
