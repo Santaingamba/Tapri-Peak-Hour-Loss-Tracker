@@ -1,0 +1,25 @@
+timestamp,item,unit_price,qty_handed_over,qty_paid_for,crowd_level,observation_note,verification_status,data_origin
+2026-11-14 08:17,Tea,10,2,2,low,Two cups handed over; both payments seen,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 08:43,Biscuits,5,3,3,low,Three packets paid together,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 09:12,Marlboro Advance,15,1,1,medium,Payment received at counter,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 10:06,Cake,10,2,1,medium,Illustrative unpaid handover; fictional example,observed_unpaid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 11:21,Tea,10,4,4,high,Four cups; payment collected,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 11:38,Gold Flake,15,2,1,high,Illustrative unpaid handover; fictional example,observed_unpaid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 11:52,Boiled Maggi,20,1,1,high,Payment collected after serving,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 12:09,Biscuits,5,2,1,high,Illustrative uncertain payment; fictional example,needs_follow_up,SIMULATED_NOT_FIELD_DATA
+2026-11-14 12:24,Fried Maggi,30,1,1,high,Paid by UPI after serving,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 12:41,Tea,10,3,2,high,Illustrative unpaid handover; fictional example,observed_unpaid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 13:03,Flake,10,1,1,high,Payment collected,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 13:19,Bread Omelette,30,1,0,high,Illustrative unpaid handover; fictional example,observed_unpaid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 13:47,Tropical,10,2,2,high,Both packs paid,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 14:16,Omelette,20,1,1,medium,Payment collected,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 14:42,Tea,10,2,1,medium,Illustrative uncertain payment; fictional example,needs_follow_up,SIMULATED_NOT_FIELD_DATA
+2026-11-14 15:11,Poach,20,1,1,medium,Paid in cash,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 16:02,Marlboro Advance,15,2,1,high,Illustrative unpaid handover; fictional example,observed_unpaid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 16:28,Cake,10,1,1,medium,Payment collected,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 17:06,Tea,10,5,4,high,Illustrative unpaid handover; fictional example,observed_unpaid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 17:23,Gold Flake,15,1,1,high,Payment collected,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 17:49,Fried Maggi,30,1,0,high,Illustrative unpaid handover; fictional example,observed_unpaid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 18:14,Biscuits,5,2,2,medium,Both packets paid,paid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 18:37,Tea,10,2,1,high,Illustrative unpaid handover; fictional example,observed_unpaid,SIMULATED_NOT_FIELD_DATA
+2026-11-14 19:05,Boiled Maggi,20,1,1,low,Payment collected,paid,SIMULATED_NOT_FIELD_DATA
