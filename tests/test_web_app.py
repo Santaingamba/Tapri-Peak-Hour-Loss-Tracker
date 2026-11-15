@@ -84,7 +84,7 @@ class TrackerWebTests(unittest.TestCase):
                     data={"csrf": self.token(), "amount": amount, "method": "upi"},
                     follow_redirects=True,
                 )
-                self.assertIn("Recovery", result.get_data(as_text=True))
+                self.assertIn("flash error", result.get_data(as_text=True))
         with web_app.connect() as db:
             self.assertEqual(db.execute("SELECT COUNT(*) FROM recoveries").fetchone()[0], 0)
 
