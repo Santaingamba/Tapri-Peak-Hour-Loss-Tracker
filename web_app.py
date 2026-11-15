@@ -1,6 +1,6 @@
 from __future__ import annotations
 import csv, hmac, os, secrets, sqlite3
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from functools import wraps
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -116,7 +116,7 @@ def health():
 @app.route("/login",methods=["GET","POST"])
 def login():
  if session.get("ok"): return redirect(url_for("home"))
- ip=request.remote_addr or "unknown"; cutoff=(datetime.utcnow()-timedelta(minutes=15)).isoformat(timespec="seconds")
+ ip=request.remote_addr or "unknown"; cutoff=(datetime.now(timezone.utc).replace(tzinfo=None)-timedelta(minutes=15)).isoformat(timespec="seconds")
  fails=g.db.execute("SELECT COUNT(*) FROM attempts WHERE ip=? AND at>=? AND success=0",(ip,cutoff)).fetchone()[0]
  if request.method=="POST":
   if fails>=8: abort(429,"Too many failed attempts. Wait 15 minutes.")
